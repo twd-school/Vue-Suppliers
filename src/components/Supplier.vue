@@ -5,11 +5,13 @@
     >
         <h3>{{ name }}</h3>
         <h4 :class="status ? 'stock-ok' : 'stock-ko'">A du stock : {{ status ? 'OK' : 'KO' }}</h4>
-        <p>Date de dernière relevé des stocks : {{ checkedAt.toLocaleString() }}</p>
+        <p>Date de dernière relevé des stocks : {{ format(checkedAt, 'fr-FR') }}</p>
     </section>
 </template>
 
 <script>
+import { format } from 'timeago.js';
+
 export default {
     name: "Supplier",
     props: {
@@ -19,6 +21,9 @@ export default {
         checkedAt: Date,
         onSupplierClick: Function,
     },
+    methods: {
+        format
+    }
 }
 </script>
 
