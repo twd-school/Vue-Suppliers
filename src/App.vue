@@ -2,20 +2,20 @@
     <div id="app">
         <img alt="Vue logo" src="./assets/logo.png">
         <div>
-            <button @click="onSuppliersListClick">Suppliers</button>
-            <button @click="onMapClick">Map</button>
+            <router-link to="/suppliers">
+                <button>Suppliers</button>
+            </router-link>
+            <router-link to="/map">
+                <button>Map</button>
+            </router-link>
         </div>
-        <SuppliersList />
-        <SuppliersMap />
+        <router-view />
     </div>
 </template>
 
 <script>
-import SuppliersList from "@/components/SuppliersList";
-import SuppliersMap from "@/components/SuppliersMap";
 export default {
     name: 'App',
-    components: {SuppliersMap, SuppliersList},
     methods: {
         onSuppliersListClick() {alert('cool')},
         onMapClick() {alert('sympa')}
