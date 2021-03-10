@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Carte des fournisseurs</h1>
-        <Map />
+        <Map :suppliers="suppliers"/>
     </div>
 </template>
 
@@ -9,7 +9,10 @@
 import Map from "@/components/Map";
 export default {
     name: "SuppliersMap",
-    components: {Map}
+    components: {Map},
+    props: {
+        suppliers: Array
+    }
 }
 </script>
 

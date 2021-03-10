@@ -5,7 +5,7 @@
             <LMarker
                 v-for="{id, latitude, longitude} of suppliers"
                 v-bind:key="id"
-                :lat-lng="[latitude, longitude]"
+                :lat-lng="[parseFloat(latitude), parseFloat(longitude)]"
             />
         </LMap>
     </div>
@@ -26,19 +26,10 @@ export default {
             zoom: 6,
             center: [46.5322, 2.9482],
             bounds: null,
-            suppliers: [
-                {
-                    id: 1,
-                    latitude: 10,
-                    longitude: 10
-                },
-                {
-                    id: 2,
-                    latitude: 11,
-                    longitude: 9.6
-                }
-            ]
         };
+    },
+    props: {
+        suppliers: Array
     }
 };
 </script>

@@ -9,16 +9,35 @@
                 <button>Map</button>
             </router-link>
         </div>
-        <router-view />
+        <router-view :suppliers="suppliers"/>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'App',
     methods: {
-        onSuppliersListClick() {alert('cool')},
-        onMapClick() {alert('sympa')}
+        async getSuppliers() {
+            try {
+                const res = await axios.get('https://api-suppliers.herokuapp.com/api/suppliers');
+                this.suppliers = res.data;
+                this.loading = false;
+            } catch (e) {
+                this.error = e;
+                this.loading = false;
+            }
+        }
+    },
+    data() {
+        return {
+            suppliers: [],
+            loading: true,
+            error: null,
+        }
+    },
+    created() {
+        this.getSuppliers();
     }
 }
 </script>
