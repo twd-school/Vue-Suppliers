@@ -1,7 +1,10 @@
 <template>
-    <section class="frame">
+    <section
+        :class="status ? 'frame frame-ok' : 'frame frame-ko'"
+        @click="() => onSupplierClick(id)"
+    >
         <h3>{{ name }}</h3>
-        <h4 :class="status ? 'ok' : 'ko'">A du stock : {{ status ? 'OK' : 'KO' }}</h4>
+        <h4 :class="status ? 'stock-ok' : 'stock-ko'">A du stock : {{ status ? 'OK' : 'KO' }}</h4>
         <p>Date de dernière relevé des stocks : {{ checkedAt.toLocaleString() }}</p>
     </section>
 </template>
@@ -10,24 +13,38 @@
 export default {
     name: "Supplier",
     props: {
+        id: String,
         name: String,
         status: Boolean,
-        checkedAt: Date
+        checkedAt: Date,
+        onSupplierClick: Function,
     },
 }
 </script>
 
 <style scoped>
-.ok {
+.stock-ok {
     color: darkolivegreen;
 }
 
-.ko {
+.stock-ko {
     color: red;
 }
 
 .frame {
-    border: 2px solid darkslategray;
-    margin: 1rem;
+    border: 1px solid lightgray;
+    border-radius: 6px;
+    margin: 1.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
 }
+
+.frame-ok {
+    background: #e9fae2
+}
+
+.frame-ko {
+    background: #ffeeea;
+}
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 80vh">
+    <div v-if="center" style="height: 32rem">
         <LMap :zoom="zoom" :center="center">
             <LTileLayer :url="url"></LTileLayer>
             <LMarker
@@ -23,13 +23,13 @@ export default {
     data() {
         return {
             url: "https://{s}.tile.osm.org/{z}/{x}/{y}.png",
-            zoom: 6,
-            center: [46.5322, 2.9482],
+            zoom: 12,
             bounds: null,
         };
     },
     props: {
-        suppliers: Array
+        suppliers: Array,
+        center: Array,
     }
 };
 </script>
