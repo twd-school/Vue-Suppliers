@@ -19,10 +19,13 @@ export default {
         name: String,
         status: Boolean,
         checkedAt: Date,
-        onSupplierClick: Function,
     },
     methods: {
-        format
+        format,
+        onSupplierClick(id) {
+            this.$store.commit('setSelectedSupplier', this.$store.state.suppliers.find(supplier => supplier.id === id))
+            this.$router.push('/edit-supplier');
+        }
     }
 }
 </script>

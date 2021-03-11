@@ -1,62 +1,51 @@
 <template>
     <div id="app">
-        <img id="logo" alt="Vue logo" src="./assets/logo.png">
-        <div>
+        <nav>
             <router-link to="/suppliers">
-                <button class="btn">Suppliers</button>
+                <button class="btn">Liste</button>
             </router-link>
             <router-link to="/map">
-                <button class="btn btn-variant">Map</button>
+                <button class="btn btn-variant">Carte</button>
             </router-link>
             <router-link to="/add-supplier">
-                <button class="btn">Add supplier</button>
+                <button class="btn">Ajouter un fournisseur</button>
             </router-link>
-        </div>
-        <router-view
-            :suppliers="suppliers"
-            :center="center"
-            :selected-supplier="selectedSupplier"
-            :onSupplierClick="onSupplierClick"
+        </nav>
+        <router-view/>
+        <Alert
+            v-if="this.$store.state.message"
+            v-bind:key="this.$store.state.message.key"
+            :lifetime="this.$store.state.message.lifetime"
+            :message="this.$store.state.message.text"
+            :type="this.$store.state.message.type"
         />
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Alert from '@/components/Alert';
 export default {
     name: 'App',
+    components: { Alert },
     methods: {
         async getSuppliers() {
             try {
                 const res = await axios.get('https://api-suppliers.herokuapp.com/api/suppliers');
-                this.suppliers = res.data;
-                this.loading = false;
+                this.$store.commit('setSuppliers', res.data);
             } catch (e) {
                 this.error = e;
+            } finally {
                 this.loading = false;
             }
         },
-        onSupplierClick(id) {
-            this.selectedSupplier = this.suppliers.find(supplier => supplier.id === id);
-            this.$router.push('/edit-supplier');
-        }
-    },
-    data() {
-        return {
-            suppliers: [],
-            loading: true,
-            error: null,
-            geo: null,
-            center: null,
-            selectedSupplier: null
-        }
     },
     created() {
         this.getSuppliers();
         navigator.geolocation.getCurrentPosition((geo) => {
-            this.geo = geo;
-            const { latitude, longitude } = this.geo.coords;
-            this.center = [latitude.toFixed(2), longitude.toFixed(2)];
+            this.$store.commit('setGeo', geo);
+            const { latitude, longitude } = geo.coords;
+            this.$store.commit('setCenter', [latitude.toFixed(2), longitude.toFixed(2)]);
         },
         (error) => {
             console.error(error);
@@ -103,22 +92,8 @@ body {
     background: #1d2a39;
 }
 
-#logo:hover {
-    animation: jump 0.4s ease-in-out;
-}
-
-@keyframes jump {
-    from {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-3rem);
-    }
-
-    to {
-        transform: translateY(0);
-    }
+.btn-small {
+    font-size: 0.9rem;
 }
 
 .form-control {
@@ -135,7 +110,8 @@ body {
 }
 
 .form-control > input,
-.form-control > select {
+.form-control > select,
+.form-input {
     border: 1px solid #e5e5e5;
     padding: 0.4rem;
     background: #fff;

@@ -8,7 +8,13 @@
             </div>
             <div class="form-control">
                 <label for="checked-at">Vérifié à : </label>
-                <input type="datetime-local" id="checked-at" v-model="checkedAt" />
+                <datetime
+                    id="checked-at"
+                    type="datetime"
+                    v-model="checkedAt"
+                    input-class="form-input"
+                    :phrases="{ok: 'Ok', cancel: 'Annuler'}"
+                />
             </div>
             <div class="form-control">
                 <label for="status">Stock : </label>
@@ -25,8 +31,7 @@
                 <label for="longitude">Longitude : </label>
                 <input type="number" id="longitude" step="0.01" v-model="longitude" />
             </div>
-            <p v-if="message">{{ message }}</p>
-            <button type="submit" class="btn">Valider</button>
+            <button type="submit" class="btn btn-small">Valider</button>
         </form>
     </div>
 </template>
@@ -38,11 +43,10 @@ export default {
     data() {
         return {
             name: '',
-            checkedAt: '',
+            checkedAt: new Date().toISOString(),
             status: true,
             latitude: null,
             longitude: null,
-            message: null,
         }
     },
     methods: {
@@ -58,15 +62,27 @@ export default {
                         latitude: this.latitude,
                         longitude: this.longitude
                     });
-                this.message = res.data;
-                this.name = '';
-                this.checkedAt = '';
-                this.status = true;
-                this.latitude = null;
-                this.longitude = null;
+                if (res.data?.id) {
+                    this.$store.commit('setMessage', {
+                        text: 'Nouveau fournisseur ajouté',
+                        type: 'success',
+                        lifetime: 5000
+                    })
+                    this.$store.commit('setSuppliers', [res.data, ...this.$store.state.suppliers]);
+                    await this.$router.push('/suppliers');
+                } else {
+                    this.viewError('Une erreur inconnue est survenue');
+                }
             } catch (e) {
-                this.message = e;
+                this.viewError(e);
             }
+        },
+        viewError(e) {
+            this.$store.commit('setMessage', {
+                text: e,
+                type: 'error',
+                lifetime: 5000
+            })
         }
     }
 }

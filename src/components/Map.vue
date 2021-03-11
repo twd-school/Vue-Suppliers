@@ -1,9 +1,9 @@
 <template>
-    <div v-if="center" style="height: 32rem">
-        <LMap :zoom="zoom" :center="center">
+    <div v-if="this.$store.state.center" style="height: 32rem">
+        <LMap :zoom="zoom" :center="this.$store.state.center">
             <LTileLayer :url="url"></LTileLayer>
             <LMarker
-                v-for="{id, latitude, longitude} of suppliers"
+                v-for="{id, latitude, longitude} of this.$store.state.suppliers"
                 v-bind:key="id"
                 :lat-lng="[parseFloat(latitude), parseFloat(longitude)]"
             />
@@ -27,9 +27,5 @@ export default {
             bounds: null,
         };
     },
-    props: {
-        suppliers: Array,
-        center: Array,
-    }
 };
 </script>

@@ -10,7 +10,7 @@
             </select>
         </div>
         <Supplier
-            v-for="{ id, name, status, checkedAt } of this.handleFilters(this.suppliers, this.filter)"
+            v-for="{ id, name, status, checkedAt } of this.handleFilters(this.$store.state.suppliers, this.filter)"
             v-bind:key="id"
             :id="id"
             :name="name"
@@ -28,7 +28,6 @@ export default {
     name: "SuppliersList",
     components: {Supplier},
     props: {
-        suppliers: Array,
         onSupplierClick: Function
     },
     data() {

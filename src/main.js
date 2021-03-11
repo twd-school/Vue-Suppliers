@@ -1,9 +1,24 @@
 import Vue from 'vue'
-import App from './App.vue'
 import VueRouter from "vue-router";
-import router from './router';
-
+import VueX from 'vuex';
 import { Icon } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { Datetime } from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css'
+import { Settings } from 'luxon';
+
+import App from './App.vue'
+import router from './router';
+import storeObj from './data/store';
+import { FR_TIMEAGO } from '@/data/translations';
+
+Settings.defaultLocale = 'fr'
+
+Vue.component('datetime', Datetime);
+Vue.use(VueRouter);
+Vue.use(VueX);
+
+const store = new VueX.Store(storeObj)
 
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
@@ -12,36 +27,14 @@ Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-import 'leaflet/dist/leaflet.css';
-
 Vue.config.productionTip = false
-
-Vue.use(VueRouter);
 
 new Vue({
     router,
+    store,
     render: h => h(App),
 }).$mount('#app')
 
-import { register} from 'timeago.js';
+import { register } from 'timeago.js';
 
-const localeFunc = (number, index) => {
-    return [
-        ["à l'instant", 'dans un instant'],
-        ['il y a %s secondes', 'dans %s secondes'],
-        ['il y a 1 minute', 'dans 1 minute'],
-        ['il y a %s minutes', 'dans %s minutes'],
-        ['il y a 1 heure', 'dans 1 heure'],
-        ['il y a %s heures', 'dans %s heures'],
-        ['il y a 1 jour', 'dans 1 jour'],
-        ['il y a %s jours', 'dans %s jours'],
-        ['il y a 1 semaine', 'dans 1 semaine'],
-        ['il y a %s semaines', 'dans %s semaines'],
-        ['il y a 1 mois', 'dans 1 mois'],
-        ['il y a %s mois', 'dans %s mois'],
-        ['il y a 1 an', 'dans 1 an'],
-        ['il y a %s ans', 'dans %s ans'],
-    ][index];
-};
-
-register('fr-FR', localeFunc);
+register('fr-FR', FR_TIMEAGO);
