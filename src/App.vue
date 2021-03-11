@@ -121,4 +121,38 @@ body {
     }
 }
 
+.form-control {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0.75rem 0;
+}
+
+.form-control > label {
+    width: 50%;
+    text-align: right;
+    margin-right: 0.5rem;
+}
+
+.form-control > input,
+.form-control > select {
+    border: 1px solid #e5e5e5;
+    padding: 0.4rem;
+    background: #fff;
+    width: 12rem;
+    margin: 0;
+    outline: none;
+    border-radius: 3px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.form-control > input:focus,
+.form-control > select:focus {
+    border: 1px solid darkgray;
+}
+
+.form {
+    margin: 2rem 0;
+}
+
 </style>

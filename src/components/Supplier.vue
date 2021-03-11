@@ -4,7 +4,7 @@
         @click="() => onSupplierClick(id)"
     >
         <h3>{{ name }}</h3>
-        <h4 :class="status ? 'stock-ok' : 'stock-ko'">A du stock : {{ status ? 'OK' : 'KO' }}</h4>
+        <h4 :class="status ? 'stock-ok' : 'stock-ko'">Stock : {{ status ? 'OK' : 'KO' }}</h4>
         <p>Date de dernière relevé des stocks : {{ format(checkedAt, 'fr-FR') }}</p>
     </section>
 </template>

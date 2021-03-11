@@ -73,19 +73,4 @@ export default {
 </script>
 
 <style scoped>
-.form-control {
-    display: flex;
-    justify-content: flex-start;
-    margin: 0.75rem 0;
-}
-
-.form-control > label {
-    width: 50%;
-    text-align: right;
-    margin-right: 0.5rem;
-}
-
-.form {
-    margin: 2rem 0;
-}
 </style>

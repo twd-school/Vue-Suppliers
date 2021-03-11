@@ -39,7 +39,7 @@ export default {
     data() {
         return {
             message: '',
-            checkedAtFormatted: new Date(this.$props.selectedSupplier.checkedAt).toISOString()
+            checkedAtFormatted: new Date(this.$props.selectedSupplier.checkedAt)
         }
     },
     methods: {

@@ -1,12 +1,14 @@
 <template>
     <div>
         <h1>Liste des fournisseurs</h1>
-        <label for="filter">Filter </label>
-        <select id="filter" v-model="filter">
-            <option selected>*</option>
-            <option>OK</option>
-            <option>KO</option>
-        </select>
+        <div class="form-control">
+            <label for="filter">Filter </label>
+            <select id="filter" v-model="filter" style="width: fit-content">
+                <option selected>*</option>
+                <option>OK</option>
+                <option>KO</option>
+            </select>
+        </div>
         <Supplier
             v-for="{ id, name, status, checkedAt } of this.handleFilters(this.suppliers, this.filter)"
             v-bind:key="id"
