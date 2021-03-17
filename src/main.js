@@ -36,5 +36,6 @@ new Vue({
 }).$mount('#app')
 
 import { register } from 'timeago.js';
+import './registerServiceWorker'
 
 register('fr-FR', FR_TIMEAGO);
